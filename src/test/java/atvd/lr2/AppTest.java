@@ -1,4 +1,4 @@
-package org.example;
+package atvd.lr2;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
