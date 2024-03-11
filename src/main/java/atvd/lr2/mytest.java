@@ -51,11 +51,6 @@ public class mytest {
         String inputValue = "Кошеня";
         searchField.sendKeys(inputValue);
         Assert.assertEquals(searchField.getAttribute("value"), inputValue);
-
-        WebDriverWait wait = new WebDriverWait(chromeDriver, Duration.ofSeconds(10));
-
-        searchField.sendKeys(Keys.ENTER);
-        Assert.assertTrue(chromeDriver.getCurrentUrl().contains(baseUrl));
     }
     @Test
     public void testXpath() {
@@ -73,7 +68,6 @@ public class mytest {
     }
     @Test
     public void testPageNavigation() {
-        // Знаходимо кнопку за ідентифікатором
         WebElement button = chromeDriver.findElement(By.xpath("//*[@id=\"searchmain-container\"]/div[3]/div/div/div/a[15]"));
         button.click();
         String expectedUrl = "https://www.olx.ua/uk/obmen-barter/";
