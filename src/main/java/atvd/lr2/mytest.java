@@ -4,7 +4,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -51,6 +50,7 @@ public class mytest {
         String inputValue = "Кошеня";
         searchField.sendKeys(inputValue);
         Assert.assertEquals(searchField.getAttribute("value"), inputValue);
+        System.out.println(String.format(searchField.getAttribute("value")));
     }
     @Test
     public void testXpath() {
