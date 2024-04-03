@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class own_test {
     private static final String BASE_URL = "https://petstore.swagger.io/v2";
     private static final int ORDER_ID = 1;
-    private static final int QUANTITY = 20;
+    private static final int QUANTITY = 122;
     private static final int PET_ID = 2;
     private static final String PET_PHOTO_URL = "https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg";
 
@@ -63,6 +63,12 @@ public class own_test {
                 .body("petId", equalTo(PET_ID))
                 .body("quantity", equalTo(QUANTITY))
                 .body("complete", equalTo(true));
+    }
+    @Test(dependsOnMethods = "testGetInfo")
+    public void testDeleteOrder() {
+        Response response = RestAssured.given().pathParam("id", ORDER_ID).delete(BASE_URL + "/store/order/{id}");
+        System.out.printf("\n%s\n", response.jsonPath().get().toString());
+        response.then().statusCode(HttpStatus.SC_OK);
     }
     @Test
     public void verifyCreatePet() {
