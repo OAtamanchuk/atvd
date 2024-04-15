@@ -18,6 +18,14 @@ import java.util.Map;
 import static io.opentelemetry.semconv.SemanticAttributes.SystemCpuStateValues.USER;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+class MapObject{
+    public int id;
+    public String name;
+    public MapObject(int id, String name){
+        this.id = id;
+        this.name = name;
+    }
+}
 
 public class own_test {
     private static final String BASE_URL = "https://petstore.swagger.io/v2";
@@ -35,13 +43,13 @@ public class own_test {
     }
     @Test
     public void testPlaceOrder() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("id", ORDER_ID);
-        body.put("petId", PET_ID);
-        body.put("quantity", QUANTITY);
-        body.put("shipDate", "2024-03-12T10:00:00.000Z");
-        body.put("status", "placed");
-        body.put("complete", true);
+        Map<String, ?> body = Map.of(
+        "id", ORDER_ID,
+        "petId", PET_ID,
+        "quantity", QUANTITY,
+        "shipDate", "2024-03-12T10:00:00.000Z",
+        "status", "placed",
+        "complete", true);
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -72,21 +80,15 @@ public class own_test {
     }
     @Test
     public void verifyCreatePet() {
-        Map<String, Object> category = new HashMap<>();
-        category.put("id", 1);
-        category.put("name", "cat");
 
-        Map<String, Object> tags = new HashMap<>();
-        tags.put("id", 1);
-        tags.put("name", "nice");
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("id", 2);
-        body.put("name", "Alex");
-        body.put("photoUrls", new String[]{PET_PHOTO_URL});
-        body.put("status", "available");
-        body.put("category", category);
-        body.put("tags", new Object[]{tags});
+        Map<String, Object> body = Map.of(
+                "id", 2,
+                "name", "Alex",
+                "photoUrls", new String[]{PET_PHOTO_URL},
+                "status", "available",
+                "category", new MapObject(1, "cat"),
+                "tags", new MapObject[]{new MapObject(1, "nice"), new MapObject(2, "smart")}
+        );
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -116,10 +118,10 @@ public class own_test {
         String newName = "Ataman";
         String newStatus = "pending";
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("id", PET_ID);
-        body.put("name", newName);
-        body.put("status", newStatus);
+        Map<String, ?> body = Map.of(
+        "id", PET_ID,
+        "name", newName,
+        "status", newStatus);
 
         Response response = given()
                 .contentType(ContentType.JSON)
